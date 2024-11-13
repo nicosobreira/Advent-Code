@@ -13,17 +13,22 @@ void appendChar(char *str, char ch) {
 }
 
 int getNum(char string[]) {
-  int num;
+  int num[100];
+  int tmp = 0;
   char str_num[64] = "";
 
-  printf("%s\n", str_num);
+  /*printf("%i\n", *pn);*/
   for (char *ch = &string[0]; *ch != '\0'; ch++) {
     if (isdigit(*ch)) {
-      appendChar(str_num, *ch);
+      toInt(ch, &tmp);
+      printf("&tmp = %i\n", tmp);
     }
   }
-  toInt(str_num, &num);
-  return num;
+  printf("num = %i\n", *num);
+
+  return 0;
+  /*toInt(str_num, num);*/
+  /*return num;*/
 }
 
 int main(void) {
