@@ -1,13 +1,11 @@
 CC=gcc
 CFLAGS=-Wall
 
-#teste
-
 BDIR=./bin
 SDIR=./
 ODIR=./obj
 
-BIN=$(BDIR)/timer
+BIN=$(BDIR)/app
 SRCS=$(wildcard $(SDIR)/*.c)
 OBJS=$(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(SRCS))
 
