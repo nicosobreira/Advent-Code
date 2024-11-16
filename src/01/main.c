@@ -1,8 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define LEN(ptr) (sizeof(ptr) / sizeof(ptr[0]))
+#include <string.h>
 
 void fileExist(FILE *file) {
   if (file == NULL) {
@@ -14,37 +13,38 @@ void fileExist(FILE *file) {
 }
 
 int getInteger(char *str) {
+  int number;
   char first_num;
   char last_num;
   char *ptr;
+  unsigned int len;
   int i;
+
+  len = strlen(str);
+  len -= 2; // minus '\n' and '\0'
 
   /* Gets the FIRST number */
   ptr = str;
-  for (i = 0; i <= LEN(str); i++) {
-    /*printf("%c\n", *ptr);*/
+  for (i = 0; i <= len; i++) {
     if (isdigit(*ptr)) {
       first_num = *ptr;
       break;
     }
     ptr++;
   }
-  /*printf("%c\n", first_num);*/
 
   /* Gets the LAST number */
-  ptr = &str[LEN(str)];
-  printf("%lo\n", sizeof(str));
-  for (i = LEN(str); i >= 0; i--) {
-    printf("%c\n", *ptr);
+  ptr = &str[len];
+  for (i = len; i >= 2; i--) {
     if (isdigit(*ptr)) {
       last_num = *ptr;
       break;
     }
     ptr--;
   }
-  printf("\n");
-  /*printf("f = %c\tl = %c\n", first_num, last_num);*/
-  return 0;
+  strcat(first_num, last_num);
+  sscanf(first_num, "%d", &number);
+  return number;
 }
 
 int main(void) {
@@ -52,10 +52,10 @@ int main(void) {
   FILE *input;
   char line[64];
   int sum = 0;
-
   file_name = "./t-input.txt";
   input = fopen(file_name, "r");
   fileExist(input);
+
   while (fgets(line, sizeof(line), input)) {
     sum += getInteger(line);
   }
