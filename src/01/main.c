@@ -6,7 +6,7 @@
 void fileExist(FILE *file) {
   if (file == NULL) {
     printf("Error on open file\n");
-    exit(1);
+    exit(EXIT_FAILURE);
   } else {
     printf("Open file\n\n");
   }
@@ -16,6 +16,7 @@ int getInteger(char *str) {
   int number;
   char first_num;
   char last_num;
+  char str_num[2];
   char *ptr;
   unsigned int len;
   int i;
@@ -42,8 +43,9 @@ int getInteger(char *str) {
     }
     ptr--;
   }
-  strcat(first_num, last_num);
-  sscanf(first_num, "%d", &number);
+  str_num[0] = first_num;
+  str_num[1] = last_num;
+  sscanf(str_num, "%d", &number);
   return number;
 }
 
@@ -52,12 +54,13 @@ int main(void) {
   FILE *input;
   char line[64];
   int sum = 0;
-  file_name = "./t-input.txt";
+  file_name = "./input.txt";
   input = fopen(file_name, "r");
   fileExist(input);
 
   while (fgets(line, sizeof(line), input)) {
     sum += getInteger(line);
   }
+  printf("Total sum = %i\n", sum);
   return 0;
 }
